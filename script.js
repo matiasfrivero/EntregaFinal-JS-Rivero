@@ -14,17 +14,25 @@ function resultado(total, tiempo) {
 
 // Función para ejecutar el simulador
 function simularInversion() {
-  let capital = parseFloat(prompt("Ingrese el capital inicial:"));
-  let tasaInteres = parseFloat(prompt("Ingrese la tasa de interés anual (%):")) / 100;
-  let tiempo = parseInt(prompt("Ingrese el tiempo de inversión en años:"));
-  
-  let total = capital;
-  for (let i = 1; i <= tiempo; i++) {
-    total = calcularInteres(total, tasaInteres, 1);
-    resultado(total, i);
+  let bancos = prompt("¿A que banco estas afiliado?").toLowerCase()
+  if ((bancos === "macro") || (bancos === "naranja") || (bancos === "bbva") || (bancos === "santander")){
+    alert("¡Tu banco es compatible con nuestro simulador de inversión!");{
+      let capital = parseFloat(prompt("Ingrese el capital inicial:"));
+      let tasaInteres = parseFloat(prompt("Ingrese la tasa de interés anual (%):")) / 100;
+      let tiempo = parseInt(prompt("Ingrese el tiempo de inversión en años:"));
+      
+      let total = capital;
+      for (let i = 1; i <= tiempo; i++) {
+        total = calcularInteres(total, tasaInteres, 1);
+        resultado(total, i);
+      }
+    
+      alert("¡Gracias por utilizar nuestra web!")
+    }
+  }else{
+    alert("Tu banco no es compatible con nuestro simulador de inversión :(")
   }
 
-  alert("¡Gracias por utilizar nuestra web!")
 }
 
 simularInversion();
