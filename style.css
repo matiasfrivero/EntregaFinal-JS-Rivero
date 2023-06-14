@@ -1,0 +1,26 @@
+.titulo1{
+    text-align: center;
+    border: 0;
+    padding: 20px;
+    background-color: rgba(255, 72, 66, 0.589);
+}
+
+.userData{
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+}
+
+.userData h2{
+    
+}
+
+.reservasRealizadas{
+    text-align: center;
+    padding: 15px;
+}
+
+.reservasRealizadas ul{
+    text-decoration: none;
+    list-style-type: circle;
+}

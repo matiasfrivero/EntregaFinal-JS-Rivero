@@ -1,86 +1,100 @@
-/* MEJORES INTERESES Y BANCOS PARA INVERTIR */
+/* TERCER PRE ENTREGA SIMULADOR DE RESERVA DE TURNOS EN CINES */
 
-/* 
-  (OK)-bancos: (id, nombres, tasas de interes, resultado final)
-  (OK)-arrayBancos: para agrupar todos los bancos
-  (OK)-elegir un Banco para calcular:
-    *mostrar opciones al usuario
-    *recibir la opcion elegida por el usuario
-    *individualizar al banco
-  -ver viabilidad del banco (viable o no viable para invertir)
-  -filtrar bancos para ver solo viables
+// Bienvenida al sitio web
+alert('¡Bienvenido al sitio oficial de CinePlus!');
 
-*/
+// Obtener referencia al elemento de lista ul de turnos
+const listaTurnos = document.getElementById('turnos-reservados');
 
-/* FUNCIONES */
-/* Si el mensaje recibido no es un numero, se ejecutara hasta recibir uno */
-function validarNumero(numero, mensaje){
-  while(isNaN(numero)){
-    alert("Ingresá un valor númerico.")
-    numero = parseInt(prompt(mensaje));
+// Obtener los turnos reservados del localStorage
+let turnosReservados = JSON.parse(localStorage.getItem('turnosReservados')) || [];
+
+// Mostrar los turnos reservados en la página
+mostrarTurnosReservados();
+
+
+/* AGREGAR FUNCION PARA PUSHEAR HORARIO Y SALA DE RESERVA A UN ARRAY*/
+function agregarHorario(){
+  const horarioInput = document.getElementById('horario');
+  const horario = horarioInput.value.trim();
+ 
+}
+
+function agregarReserva(){
+  const nombreInput = document.getElementById('nombre');
+  const nombre = nombreInput.value.trim();
+
+  if (nombre !== '') {
+    // Crear un objeto reserva con el nombre y la fecha actual
+    const reserva = {
+      nombre,
+      fecha: new Date().toLocaleString()
+    };
+
+    // Agregar la reserva al array de turnos reservados
+    turnosReservados.push(reserva);
+
+    // Guardar los turnos reservados en el localStorage
+    localStorage.setItem('turnosReservados', JSON.stringify(turnosReservados));
+
+    // Mostrar los turnos reservados en la página
+    mostrarTurnosReservados();
+
+    // Limpiar el campo de nombre
+    nombreInput.value = '';
   }
-  return numero;
+  alert('¡Tu turno se registró existosamente!');
 }
 
-/* Creacion de Objeto y Arrays en Bancos */
-class Bancos{
-  constructor(id, nombre){
-    this.id = id,
-    this.nombre = nombre,
-    this.tasa = [],
-    this.final = ""
+function mostrarTurnosReservados(){
+  // Limpiar la lista de turnos reservados
+  listaTurnos.innerHTML = '';
+
+  // Iterar sobre los turnos reservados y crear elementos li para mostrarlos
+  for (const reserva of turnosReservados) {
+    const li = document.createElement('li');
+    li.textContent = `${reserva.nombre} - ${reserva.fecha} - `;
+    listaTurnos.appendChild(li);
   }
 }
 
-const banco1 = new Bancos(1, "Macro");
-const banco2 = new Bancos(2, "Naranja");
-const banco3 = new Bancos(3, "BBVA");
-const banco4 = new Bancos(4, "Santander");
-const banco5 = new Bancos(5, "Galicia");
+// Obtener referencia al elemento de lista ul para peliculas
+const catalogo = document.getElementById('catalogo');
 
-const BANCOS = [banco1,banco2,banco3,banco4,banco5];
+// Array para almacenar las películas del catálogo
+let peliculasCatalogo = [];
 
-function mensajeBienvenida(){
-  /* Mensaje inicial para el simulador */
-  alert("¡Bienvenido a nuestro simulador de inversiones!");
-  let mensajeInicial = "Estos son los bancos disponibles para invertir. \n \n";
-  /* Informacion de cada Banco */
-  BANCOS.forEach(e => {
-    mensajeInicial += `${e.id} - Banco ${e.nombre} \n`
-  });
-  /* Ejecutamos el mensaje y recibimos respuesta */
-  let respuestaUser = parseInt(prompt(mensajeInicial));
-  /* Aca se evalua que el valor ingresado sea numerico, no retorna hasta no tener un valor numerico. Aqui se representa el orden respectivo de los parametros declarados en la funcion */
-  respuestaUser = validarNumero(respuestaUser, mensajeInicial)
-  /* Individualiza los bancos segun el numero ingresado por el usuario */
-  return BANCOS.find(elem => elem.id === respuestaUser);
-}
+function agregarPelicula() {
+  const peliculasSelect = document.getElementById('peliculas');
+  const peliculaSeleccionada = peliculasSelect.value;
 
-function elegirTasa(banco){
-  /* Evalua la cantidad de tasas bancarias indicadas */
-  if (banco.tasa.length == 2){return alert("Ya ingresaste los valores de las tasas a corto y largo plazo, ahora calculemos tu resultado final")}
-  /* Indica las tasas de cada entidad bancaria */
-  alert(
-    "Las tasas de los bancos son las siguientes: \n Banco Macro = 3% - 5% \n Banco Naranja = 4% - 6% \n Banco BBVA = 6% -7% \n Banco Santander = 2% - 8% \n Banco Galicia = 7% - 4%" 
-    )
-  /* Ingresara ambas tasas segun el banco seleccionado */
-  let valorTasa = parseInt(prompt(`Ingrese la tasa ${banco.tasa.length + 1} del banco ${banco.nombre}`))
-  /* Valida las tasas ingresadas */
-  valorTasa = validarNumero(valorTasa, `Ingrese la tasa ${banco.tasa.length + 1} del banco ${banco.nombre}`)
-  /* Pusheo al array tasa */
-  banco.tasa.push(valorTasa)
-}
+  if (peliculaSeleccionada !== '') {
+    // Verificar si la película ya existe en el catálogo
+    if (!peliculasCatalogo.includes(peliculaSeleccionada)) {
+      // Agregar la película al catálogo
+      peliculasCatalogo.push(peliculaSeleccionada);
 
-const bancoSeleccionado = mensajeBienvenida();
-elegirTasa(bancoSeleccionado);
+      // Mostrar la película en la lista del catálogo
+      const li = document.createElement('li');
+      li.textContent = peliculaSeleccionada;
+      catalogo.appendChild(li);
+    }
 
-function tasaFinal(banco){
-  if (banco.tasa.length < 2){
-    alert("Debes ingresar las dos tasas indicadas del banco que seleccionaste para llegar al resultado final.")
-    return
+    // Restablecer el valor seleccionado en el select
+    peliculasSelect.value = '';
   }
-
-
-
-
 }
+
+function limpiarReservas() {
+  // Limpiar el array de turnos reservados
+  turnosReservados = [];
+
+  // Limpiar el localStorage
+  localStorage.removeItem('turnosReservados');
+
+  // Limpiar la lista en la página
+  mostrarTurnosReservados();
+  alert('Borraste tus reservas, por favor realiza una nuevamente.')
+}
+
+/* AGREGAR SALAS, HORARIOS, CANTIDAD DE ENTRADAS, ORGANIZACION */
