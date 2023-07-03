@@ -1,4 +1,4 @@
-/* TERCER PRE ENTREGA SIMULADOR DE RESERVA DE TURNOS EN CINES */
+/* ENTREGA FINAL DEL SIMULADOR DE RESERVA DE TURNOS EN CINES */
 
 // Bienvenida al sitio web
 alert('¡Bienvenido al sitio oficial de CinePlus!');
@@ -97,4 +97,4 @@ function limpiarReservas() {
   alert('Borraste tus reservas, por favor realiza una nuevamente.')
 }
 
-/* AGREGAR SALAS, HORARIOS, CANTIDAD DE ENTRADAS, ORGANIZACION */
+/* AGREGAR ARRAY CON OBJETOS (PELICULAS Y HORARIOS), CANTIDAD DE ENTRADAS, ORGANIZACION */
