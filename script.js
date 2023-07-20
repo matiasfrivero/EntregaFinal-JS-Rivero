@@ -1,100 +1,85 @@
 /* ENTREGA FINAL DEL SIMULADOR DE RESERVA DE TURNOS EN CINES */
 
 // Bienvenida al sitio web
-alert('¡Bienvenido al sitio oficial de CinePlus!');
+const bienvenida = document.getElementById("bienvenida");
+bienvenida.innerHTML = `<h1>Hace tu Reserva en CinePlus</h1>
+<P>Para que podamos registrar tu reserva, por favor, completá los datos que se iran presentando a continuación.</P>`
 
-// Obtener referencia al elemento de lista ul de turnos
-const listaTurnos = document.getElementById('turnos-reservados');
+// Catalogo de peliculas
+const catalogo1 = document.getElementById("catalogo1");
+catalogo1.innerHTML = `<h2>Catálogo de Películas:</h2>
+    <select class="reservation-select">
+        <option value="">Seleccionar película</option>
+        <option value="Avengers: Endgame">Avengers: Endgame</option>
+        <option value="Titanic">Titanic</option>
+        <option value="Inception">Inception</option>
+        <option value="Pulp Fiction">Pulp Fiction</option>
+        <option value="Avatar">Avatar</option>
+    </select>`
 
-// Obtener los turnos reservados del localStorage
-let turnosReservados = JSON.parse(localStorage.getItem('turnosReservados')) || [];
+// Horarios y salas disponibles
+const horarios1 = document.getElementById("horarios1");
+horarios1.innerHTML = `<h2>Horarios Disponibles:</h2>
+    <select class="reservation-select">
+        <option value="">Seleccionar horario y sala</option>
+        <option value="Sala 1 - 12:00 hs">Sala 1 - 12:00 hs</option>
+        <option value="Sala 2 - 14:00 hs">Sala 2 - 14:00 hs</option>
+        <option value="Sala 2 - 18:00 hs">Sala 2 - 18:00 hs</option>
+        <option value="Sala 3 - 20:00 hs">Sala 3 - 20:00 hs</option>
+        <option value="Sala 1 - 23:00 hs">Sala 1 - 23:00 hs</option>
+    </select>`
 
-// Mostrar los turnos reservados en la página
-mostrarTurnosReservados();
+// Datos de la reserva
+const datos1 = document.getElementById("datos1");
+datos1.innerHTML = `<h2>Datos de la Reserva:</h2>
+    <label for="nombre">Nombre y Apellido:</label>
+    <input type="text" id="nombre" class="reservation-select"/>`
 
+// Botones con funcion de reservar y limpiar campos
+const botonesReserva = document.getElementById("reservation-button");
+botonesReserva.innerHTML = `<button id="reservation-select">Reservar</button>
+    <button id="clear-select">Limpiar</button>`
 
-/* AGREGAR FUNCION PARA PUSHEAR HORARIO Y SALA DE RESERVA A UN ARRAY*/
-function agregarHorario(){
-  const horarioInput = document.getElementById('horario');
-  const horario = horarioInput.value.trim();
- 
-}
+// Asignacion de los botones de reserva y limpiar
+const selectElements = document.querySelectorAll(".reservation-select");
+const reservationList = document.getElementById("reservation-list");
+const reservationButton = document.getElementById("reservation-select");
+const clearButton = document.getElementById("clear-select");
 
-function agregarReserva(){
-  const nombreInput = document.getElementById('nombre');
-  const nombre = nombreInput.value.trim();
+// Funcion para limpiar reserva y storage
+clearButton.addEventListener('click', function() {
+  localStorage.clear();
+  reservationList.innerHTML = ("");
+  selectElements.forEach((select) => {select.value = null;});
+});
 
-  if (nombre !== '') {
-    // Crear un objeto reserva con el nombre y la fecha actual
-    const reserva = {
-      nombre,
-      fecha: new Date().toLocaleString()
-    };
+// Función para manejar el evento click del botón de reserva
+reservationButton.addEventListener('click', function() {
+  // Crear un array para almacenar las selecciones
+  const reservations = [];
 
-    // Agregar la reserva al array de turnos reservados
-    turnosReservados.push(reserva);
+  // Recorrer los elementos select y guardar sus valores seleccionados en el array
+  selectElements.forEach((select) => {
+    const selectedValue = select.value;
+    reservations.push(selectedValue);
+  });
 
-    // Guardar los turnos reservados en el localStorage
-    localStorage.setItem('turnosReservados', JSON.stringify(turnosReservados));
+  // Convertir el array a una cadena JSON y almacenarlo en el localStorage
+  localStorage.setItem('reservations', JSON.stringify(reservations));
 
-    // Mostrar los turnos reservados en la página
-    mostrarTurnosReservados();
+  // Mostrar la lista de reservas en el div
+  reservationList.innerHTML = reservations.join(`, `);
+});
 
-    // Limpiar el campo de nombre
-    nombreInput.value = '';
+// Reservas realizadas
+const reservasList = document.getElementById("reservation-list");
+reservasList.innerHTML = ``
+
+// Al cargar la página, mostrar las reservas almacenadas previamente
+document.addEventListener('DOMContentLoaded', function() {
+  const storedReservations = localStorage.getItem('reservations');
+  if (storedReservations) {
+    const reservations = JSON.parse(storedReservations);
+    reservationList.innerHTML = reservations.join(', ');
   }
-  alert('¡Tu turno se registró existosamente!');
-}
-
-function mostrarTurnosReservados(){
-  // Limpiar la lista de turnos reservados
-  listaTurnos.innerHTML = '';
-
-  // Iterar sobre los turnos reservados y crear elementos li para mostrarlos
-  for (const reserva of turnosReservados) {
-    const li = document.createElement('li');
-    li.textContent = `${reserva.nombre} - ${reserva.fecha} - `;
-    listaTurnos.appendChild(li);
-  }
-}
-
-// Obtener referencia al elemento de lista ul para peliculas
-const catalogo = document.getElementById('catalogo');
-
-// Array para almacenar las películas del catálogo
-let peliculasCatalogo = [];
-
-function agregarPelicula() {
-  const peliculasSelect = document.getElementById('peliculas');
-  const peliculaSeleccionada = peliculasSelect.value;
-
-  if (peliculaSeleccionada !== '') {
-    // Verificar si la película ya existe en el catálogo
-    if (!peliculasCatalogo.includes(peliculaSeleccionada)) {
-      // Agregar la película al catálogo
-      peliculasCatalogo.push(peliculaSeleccionada);
-
-      // Mostrar la película en la lista del catálogo
-      const li = document.createElement('li');
-      li.textContent = peliculaSeleccionada;
-      catalogo.appendChild(li);
-    }
-
-    // Restablecer el valor seleccionado en el select
-    peliculasSelect.value = '';
-  }
-}
-
-function limpiarReservas() {
-  // Limpiar el array de turnos reservados
-  turnosReservados = [];
-
-  // Limpiar el localStorage
-  localStorage.removeItem('turnosReservados');
-
-  // Limpiar la lista en la página
-  mostrarTurnosReservados();
-  alert('Borraste tus reservas, por favor realiza una nuevamente.')
-}
-
-/* AGREGAR ARRAY CON OBJETOS (PELICULAS Y HORARIOS), CANTIDAD DE ENTRADAS, ORGANIZACION */
+});

@@ -1,26 +1,47 @@
+body{
+    background-image: url(./Media/Background2.png);
+    background-size: cover;
+}
+
 .titulo1{
     text-align: center;
-    border: 0;
-    padding: 20px;
-    background-color: rgba(255, 72, 66, 0.589);
+    margin: 50px 250px;
+    border-radius: 110px;
+    padding: 40px;
+    background-color: rgba(204, 157, 87, 0.479);
+    animation: fadeIn;
+    animation-duration: 3s;
 }
 
 .userData{
     display: flex;
+    text-align: center;
     justify-content: space-around;
     padding: 15px;
+    background-color: rgba(204, 157, 87, 0.356);
+    animation: fadeIn;
+    animation-duration: 5s;
 }
 
-.userData h2{
-    
+.btnsReserva{
+    text-align: center;
+    padding: 20px;
+    animation: fadeInUp;
+    animation-duration: 5s;
 }
 
 .reservasRealizadas{
     text-align: center;
     padding: 15px;
+    font-size: 130%;
+    background-color: rgba(255, 255, 255, 0.322);
+    margin: 10px 300px;
+    border-radius: 50px;
+    font-weight: 700;
+    animation: fadeInUp;
+    animation-duration: 5s;
 }
 
-.reservasRealizadas ul{
-    text-decoration: none;
-    list-style-type: circle;
+.reservation-select{
+    text-align: center;
 }

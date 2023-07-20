@@ -6,51 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./Media/palomitas-de-maiz.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <title>Reservas CinePlus</title>
 </head>
 <body>
-<section class="titulo1">
-    <h1>Hace tu Reserva en CinePlus</h1>
-    <P>Para que podamos registrar tu reserva, por favor, completá los datos que se iran presentando a continuación.</P>
+<section id="bienvenida" class="titulo1">
 </section>
 
 <section class="userData">
-<div>
-    <h2>Catálogo de Películas:</h2>
-    <select id="peliculas">
-        <option value="">Seleccionar película</option>
-        <option value="Avengers: Endgame">Avengers: Endgame</option>
-        <option value="Titanic">Titanic</option>
-        <option value="Inception">Inception</option>
-        <option value="Pulp Fiction">Pulp Fiction</option>
-        <option value="Avatar">Avatar</option>
-    </select>
+<div id="catalogo1">
 </div>
-<div>
-    <h2>Horarios Disponibles:</h2>
-    <select id="horarios">
-        <option value="">Seleccionar horario y sala</option>
-        <option value="Sala 1 - 12:00 hs">Sala 1 - 12:00 hs</option>
-        <option value="Sala 2 - 14:00 hs">Sala 2 - 14:00 hs</option>
-        <option value="Sala 2 - 18:00 hs">Sala 2 - 18:00 hs</option>
-        <option value="Sala 3 - 20:00 hs">Sala 3 - 20:00 hs</option>
-        <option value="Sala 1 - 23:00 hs">Sala 1 - 23:00 hs</option>
-    </select>
+
+<div id="horarios1">
 </div>
-<div>
-    <h2>Datos de la Reserva:</h2>
-    <label for="nombre">Nombre y Apellido:</label>
-    <input type="text" id="nombre" />
-    <button onclick="agregarReserva()">Reservar Turno</button>
+
+<div id="datos1">
 </div>
 </section>
-<div class="reservasRealizadas">
-    <h2>Turnos Reservados:</h2>
-        <ul id="catalogo"></ul>
-        <ul id="turnos-reservados"></ul>
-    <br>
-    <button onclick="limpiarReservas()">Limpiar Reservas</button>
+
+<div id="reservation-button" class="btnsReserva">
 </div>
+
+<div id="reservation-list" class="reservasRealizadas">
+</div>
+
 <script src="./script.js"></script>
 </body>
 </html>
